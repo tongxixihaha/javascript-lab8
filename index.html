@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Custom Hamburger Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+        }
+
+        #generateButton {
+            display: block;
+            margin: 0 auto;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Custom Hamburger Generator</h1>
+    <button id="generateButton">Generate Hamburger</button>
+    <div id="result"></div>
+
+    <script>
+        // Define the function to format hamburger details
+        function formatHamburgerDetails(hamburger) {
+            const formattedDetails = `
+                <h2>Your Custom Hamburger:</h2>
+                <ul>
+                    <li><strong>Bun:</strong> ${hamburger.bun}</li>
+                    <li><strong>Vegetables:</strong> ${hamburger.vegetables.join(', ')}</li>
+                    <li><strong>Cheeses:</strong> ${hamburger.cheeses.join(', ')}</li>
+                    <li><strong>Sauces:</strong> ${hamburger.sauces.join(', ')}</li>
+                    <li><strong>Meat:</strong> ${hamburger.meat}</li>
+                    <li><strong>Patty Count:</strong> ${hamburger.pattyCount}</li>
+                    <li><strong>Extra Toppings:</strong> ${hamburger.extraToppings.join(', ')}</li>
+                </ul>
+                <p>${getHamburgerDescription(hamburger)}</p>
+            `;
+            return formattedDetails;
+        }
+
+        // Define the function to create a hamburger
+        function createHamburger() {
+            const bunTypes = ["sesame", "whole wheat", "brioche", "pretzel"];
+            const vegetableGarnishes = ["lettuce", "tomato", "onion", "pickles", "avocado"];
+            const cheeseOptions = ["cheddar", "swiss", "blue", "mozzarella"];
+            const sauces = ["ketchup", "mayo", "mustard", "barbecue", "ranch"];
+            const meatOptions = ["beef", "chicken", "vegetarian"];
+            const pattyCount = Math.floor(Math.random() * 3) + 1;
+            const extraToppings = ["hot peppers", "olives", "mushrooms", "bacon"];
+
+            const hamburger = {
+                bun: bunTypes[Math.floor(Math.random() * bunTypes.length)],
+                vegetables: vegetableGarnishes.slice(0, Math.floor(Math.random() * (vegetableGarnishes.length + 1))),
+                cheeses: cheeseOptions.slice(0, Math.floor(Math.random() * (cheeseOptions.length + 1))),
+                sauces: sauces.slice(0, Math.floor(Math.random() * (sauces.length + 1))),
+                meat: meatOptions[Math.floor(Math.random() * meatOptions.length)],
+                pattyCount: pattyCount,
+                extraToppings: extraToppings.slice(0, Math.floor(Math.random() * (extraToppings.length + 1))),
+            };
+
+            return hamburger;
+        }
+
+        // Define the function to get hamburger description
+        function getHamburgerDescription(hamburger) {
+            const veggieStr = hamburger.vegetables.length > 0 ? ` with ${hamburger.vegetables.join(', ')}` : "";
+            const cheeseStr = hamburger.cheeses.length > 0 ? ` topped with ${hamburger.cheeses.join(', ')} cheese` : "";
+            const sauceStr = hamburger.sauces.length > 0 ? ` and dressed with ${hamburger.sauces.join(', ')} sauce` : "";
+            const meatStr = hamburger.meat.charAt(0).toUpperCase() + hamburger.meat.slice(1);
+
+            return `A delicious ${meatStr} burger on a ${hamburger.bun} bun${veggieStr}${cheeseStr}${sauceStr}.`;
+        }
+
+        // Attach event listener to the "Generate Hamburger" button
+        const generateButton = document.getElementById("generateButton");
+        const resultElement = document.getElementById("result");
+
+        generateButton.addEventListener("click", function() {
+            const customHamburger = createHamburger();
+            const formattedHamburger = formatHamburgerDetails(customHamburger);
+            resultElement.innerHTML = formattedHamburger;
+        });
+    </script>
+</body>
+</html>
